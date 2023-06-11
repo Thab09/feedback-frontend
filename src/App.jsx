@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ClerkProvider } from "@clerk/clerk-react";
+import AuthorizedUser from "./layouts/AuthorizedUser";
+import YourBoxes from "./pages/YourBoxes";
+import UserDashboard from "./pages/UserDashboard";
+import CreateBox from "./pages/CreateBox";
+import UserSettings from "./pages/UserSettings";
+import Home from "./pages/Home";
+import Features from "./pages/Features";
+import PublicBoxes from "./pages/PublicBoxes";
+
+if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
+const clerkPubKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <ClerkProvider publishableKey={clerkPubKey}>
+        <Routes>
+          <Route element={<AuthorizedUser />}>
+            <Route path="/yourboxes" element={<YourBoxes />} />
+            <Route path="/dashboard" element={<UserDashboard />} />
+            <Route path="/createbox" element={<CreateBox />} />
+            <Route path="/settings" element={<UserSettings />} />
+          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/publicboxes" element={<PublicBoxes />} />
+          {/* <Route path="/contact" element={<Home />} /> */}
+        </Routes>
+      </ClerkProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
