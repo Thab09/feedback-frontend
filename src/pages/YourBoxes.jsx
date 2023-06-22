@@ -1,5 +1,10 @@
+import CreateBox from "./CreateBox";
 function YourBoxes() {
-  return <div>YourBoxes</div>;
+  return (
+    <div>
+      <CreateBox />
+    </div>
+  );
 }
 
 export default YourBoxes;

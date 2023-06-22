@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import AuthorizedUser from "./layouts/AuthorizedUser";
 import YourBoxes from "./pages/YourBoxes";
 import UserDashboard from "./pages/UserDashboard";
@@ -31,6 +33,7 @@ function App() {
           {/* <Route path="/contact" element={<Home />} /> */}
         </Routes>
       </ClerkProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </BrowserRouter>
   );
 }
