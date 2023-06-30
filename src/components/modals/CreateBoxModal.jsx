@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useUser } from "@clerk/clerk-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -16,6 +16,7 @@ function CreateBoxModal() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -23,12 +24,6 @@ function CreateBoxModal() {
     mutationFn: createBox,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userboxes"] });
-      reset({
-        boxTitle: "",
-        boxDescription: "",
-        boxOpen: false,
-        boxPublic: false,
-      });
       closeModal();
     },
   });
@@ -45,6 +40,7 @@ function CreateBoxModal() {
     });
   };
   function closeModal() {
+    reset();
     setIsOpen(false);
   }
 
@@ -140,33 +136,25 @@ function CreateBoxModal() {
 
                       <div>
                         <span>Box Open</span>
-                        <label
-                          htmlFor="boxOpen"
-                          className="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            id="boxOpen"
-                            type="checkbox"
-                            {...register("boxOpen")}
-                            className="peer sr-only"
-                          ></input>
-                          <ToggleButton />
-                        </label>
+                        <Controller
+                          control={control}
+                          name="boxOpen"
+                          defaultValue={false}
+                          render={({ field: { onChange, value } }) => (
+                            <ToggleButton checked={value} onChange={onChange} />
+                          )}
+                        />
                       </div>
                       <div>
-                        <span>Public Box</span>
-                        <label
-                          htmlFor="boxPublic"
-                          className="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            id="boxPublic"
-                            type="checkbox"
-                            {...register("boxPublic")}
-                            className="peer sr-only"
-                          ></input>
-                          <ToggleButton />
-                        </label>
+                        <span>Box Public</span>
+                        <Controller
+                          control={control}
+                          name="boxPublic"
+                          defaultValue={false}
+                          render={({ field: { onChange, value } }) => (
+                            <ToggleButton checked={value} onChange={onChange} />
+                          )}
+                        />
                       </div>
                       <div className="mt-4">
                         <button

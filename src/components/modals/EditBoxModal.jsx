@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { updateBox } from "../../api/boxes";
 import ToggleButton from "../ToggleButton";
-import EditSwitchButton from "../EditSwitchButton";
 
 function EditBoxModal({ box }) {
   let [isOpen, setIsOpen] = useState(false);
@@ -32,8 +31,6 @@ function EditBoxModal({ box }) {
     mutationFn: updateBox,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userboxes"] });
-
-      // reset();
       closeModal();
     },
   });
@@ -143,48 +140,27 @@ function EditBoxModal({ box }) {
                       />
                       <p>{errors.boxDescription?.message}</p>
 
-                      {/* <div>
-                        <span>Box Open</span>
-                        <label
-                          htmlFor="boxOpen"
-                          className="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            id="boxOpen"
-                            type="checkbox"
-                            {...register("boxOpen")}
-                            className="peer sr-only"
-                          ></input>
-                          <ToggleButton toggle={box.box_open} />
-                        </label>
-                      </div> */}
                       <div>
-                        <span>Open Box 2</span>
+                        <span>Box Open</span>
                         <Controller
                           control={control}
                           name="boxOpen"
+                          defaultValue={box.box_open}
                           render={({ field: { onChange, value } }) => (
-                            <EditSwitchButton
-                              checked={value}
-                              onChange={onChange}
-                            />
+                            <ToggleButton checked={value} onChange={onChange} />
                           )}
                         />
                       </div>
                       <div>
-                        <span>Public Box</span>
-                        <label
-                          htmlFor="boxPublic"
-                          className="relative inline-flex cursor-pointer items-center"
-                        >
-                          <input
-                            id="boxPublic"
-                            type="checkbox"
-                            {...register("boxPublic")}
-                            className="peer sr-only"
-                          ></input>
-                          <ToggleButton toggle={box.box_public} />
-                        </label>
+                        <span>Box Public</span>
+                        <Controller
+                          control={control}
+                          name="boxPublic"
+                          defaultValue={box.box_public}
+                          render={({ field: { onChange, value } }) => (
+                            <ToggleButton checked={value} onChange={onChange} />
+                          )}
+                        />
                       </div>
                       <div className="mt-4">
                         <button
@@ -196,7 +172,10 @@ function EditBoxModal({ box }) {
                         <button
                           type="button"
                           className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          onClick={closeModal}
+                          onClick={() => {
+                            closeModal();
+                            reset();
+                          }}
                         >
                           Close
                         </button>

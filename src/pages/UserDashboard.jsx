@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@clerk/clerk-react";
-import { Link } from "react-router-dom";
 import { getUserBoxes } from "../api/boxes";
 import NotFound from "../components/errors/NotFound";
 import MyDialog from "../components/MyDialog";
@@ -34,7 +33,6 @@ function UserDashboard() {
             {console.log(dat)}
             <p>{dat.box_title}</p>
             <EditBoxModal box={dat} />
-            <Link to={`/editbox/${dat.box_id}`}>Edit</Link>
             <MyDialog>Delete</MyDialog>
           </div>
         ))}
