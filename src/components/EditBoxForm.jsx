@@ -1,34 +1,40 @@
 import { useForm } from "react-hook-form";
-import { useUser } from "@clerk/clerk-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-import { createBox } from "../api/boxes";
+import { updateBox } from "../api/boxes";
 import ToggleButton from "../components/ToggleButton";
 
-function CreateBox() {
+function EditBoxForm({ userId, box }) {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { user } = useUser();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      boxTitle: box[0].box_title,
+      boxDescription: box[0].box_description,
+      boxOpen: box[0].box_open,
+      boxPublic: box[0].box_public,
+    },
+  });
 
-  const createBoxMutation = useMutation({
-    mutationFn: createBox,
+  const updateBoxMutation = useMutation({
+    mutationFn: updateBox,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["boxes"] });
+      queryClient.invalidateQueries({ queryKey: ["getbox"] });
       navigate("/dashboard");
     },
   });
 
   const onSubmit = (data) => {
-    createBoxMutation.mutate({
-      userId: user.id,
-      userName: user.fullName,
+    console.log(data);
+    updateBoxMutation.mutate({
+      userId: userId,
+      boxId: box[0].box_id,
       boxTitle: data.boxTitle,
       boxDescription: data.boxDescription,
       boxOpen: data.boxOpen,
@@ -38,7 +44,7 @@ function CreateBox() {
   };
   return (
     <div>
-      <p>CreateBox</p>
+      <p>Edit Box</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="boxTitle">Box Title</label>
         <input
@@ -112,4 +118,4 @@ function CreateBox() {
   );
 }
 
-export default CreateBox;
+export default EditBoxForm;

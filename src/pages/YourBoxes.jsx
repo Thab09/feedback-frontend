@@ -1,8 +1,7 @@
-import CreateBox from "./CreateBox";
 function YourBoxes() {
   return (
     <div>
-      <CreateBox />
+      <p>Your boxes</p>
     </div>
   );
 }

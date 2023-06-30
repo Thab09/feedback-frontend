@@ -11,6 +11,9 @@ function UserNav() {
       <Link to={"/settings"}>
         <h4>Settings</h4>
       </Link>
+      <Link to={"/createbox"}>
+        <h4>Create Box</h4>
+      </Link>
     </div>
   );
 }

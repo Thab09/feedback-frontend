@@ -5,11 +5,12 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthorizedUser from "./layouts/AuthorizedUser";
 import YourBoxes from "./pages/YourBoxes";
 import UserDashboard from "./pages/UserDashboard";
-import CreateBox from "./pages/CreateBox";
+import EditBox from "./pages/EditBox";
 import UserSettings from "./pages/UserSettings";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
 import PublicBoxes from "./pages/PublicBoxes";
+import Navbar from "./components/Navbar";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -20,16 +21,17 @@ function App() {
   return (
     <BrowserRouter>
       <ClerkProvider publishableKey={clerkPubKey}>
+        <Navbar />
         <Routes>
           <Route element={<AuthorizedUser />}>
             <Route path="/yourboxes" element={<YourBoxes />} />
             <Route path="/dashboard" element={<UserDashboard />} />
-            <Route path="/createbox" element={<CreateBox />} />
+            <Route path="/editbox/:id" element={<EditBox />} />
             <Route path="/settings" element={<UserSettings />} />
           </Route>
           <Route path="/" element={<Home />} />
           <Route path="/features" element={<Features />} />
-          <Route path="/publicboxes" element={<PublicBoxes />} />
+          <Route path="/public" element={<PublicBoxes />} />
           {/* <Route path="/contact" element={<Home />} /> */}
         </Routes>
       </ClerkProvider>
