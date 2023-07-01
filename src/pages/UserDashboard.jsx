@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useUser } from "@clerk/clerk-react";
 import { getUserBoxes } from "../api/boxes";
 import NotFound from "../components/errors/NotFound";
-import MyDialog from "../components/MyDialog";
 
 import CreateBoxModal from "../components/modals/CreateBoxModal";
 import EditBoxModal from "../components/modals/EditBoxModal";
+import DeleteBoxModal from "../components/modals/DeleteBoxModal";
 
 function UserDashboard() {
   const { user } = useUser();
@@ -25,15 +25,14 @@ function UserDashboard() {
 
       {!data.length && <NotFound message={"There are no boxes."} />}
       {data.length &&
-        data?.map((dat) => (
+        data?.map((box) => (
           <div
-            key={dat.box_id}
+            key={box.box_id}
             className="flex gap-3 border border-solid border-blue-500"
           >
-            {console.log(dat)}
-            <p>{dat.box_title}</p>
-            <EditBoxModal box={dat} />
-            <MyDialog>Delete</MyDialog>
+            <p>{box.box_title}</p>
+            <EditBoxModal box={box} />
+            <DeleteBoxModal userId={user.id} boxId={box.box_id} />
           </div>
         ))}
     </div>

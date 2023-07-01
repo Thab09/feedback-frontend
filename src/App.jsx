@@ -5,7 +5,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthorizedUser from "./layouts/AuthorizedUser";
 import YourBoxes from "./pages/YourBoxes";
 import UserDashboard from "./pages/UserDashboard";
-import EditBox from "./pages/EditBox";
 import UserSettings from "./pages/UserSettings";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
@@ -26,7 +25,6 @@ function App() {
           <Route element={<AuthorizedUser />}>
             <Route path="/yourboxes" element={<YourBoxes />} />
             <Route path="/dashboard" element={<UserDashboard />} />
-            <Route path="/editbox/:id" element={<EditBox />} />
             <Route path="/settings" element={<UserSettings />} />
           </Route>
           <Route path="/" element={<Home />} />
