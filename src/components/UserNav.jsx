@@ -1,19 +1,31 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 function UserNav() {
   return (
-    <div>
-      <Link to={"/dashboard"}>
+    <div className="mb-2 mt-4 flex gap-5 text-sm ">
+      <NavLink
+        to={"/dashboard"}
+        className={({ isActive }) =>
+          isActive ? "font-semibold text-primary-400" : "text-primary-300"
+        }
+      >
         <h4>Dashboard</h4>
-      </Link>
-      <Link to={"/yourboxes"}>
+      </NavLink>
+      <NavLink
+        to={"/yourboxes"}
+        className={({ isActive }) =>
+          isActive ? "font-semibold text-primary-400" : "text-primary-300"
+        }
+      >
         <h4>Your Boxes</h4>
-      </Link>
-      <Link to={"/settings"}>
+      </NavLink>
+      <NavLink
+        to={"/settings"}
+        className={({ isActive }) =>
+          isActive ? "font-semibold text-primary-400" : "text-primary-300"
+        }
+      >
         <h4>Settings</h4>
-      </Link>
-      <Link to={"/createbox"}>
-        <h4>Create Box</h4>
-      </Link>
+      </NavLink>
     </div>
   );
 }

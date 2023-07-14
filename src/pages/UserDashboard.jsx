@@ -15,26 +15,27 @@ function UserDashboard() {
   });
 
   if (isLoading) return <p>Loading...</p>;
-  if (isError) {
-    return <p>Error: {error.message}</p>;
-  }
+  if (isError) return <p>Error: {error.message}</p>;
+
+  console.log(data);
+
   return (
     <div>
-      <p>dashboard</p>
       <CreateBoxModal />
-
-      {!data.length && <NotFound message={"There are no boxes."} />}
-      {data.length &&
-        data?.map((box) => (
-          <div
-            key={box.box_id}
-            className="flex gap-3 border border-solid border-blue-500"
-          >
-            <p>{box.box_title}</p>
-            <EditBoxModal box={box} />
-            <DeleteBoxModal userId={user.id} boxId={box.box_id} />
-          </div>
-        ))}
+      <div>
+        {!data.length && <NotFound message={"There are no boxes."} />}
+        {data.length &&
+          data?.map((box) => (
+            <div
+              key={box.box_id}
+              className="border-blue-500 flex gap-3 border border-solid"
+            >
+              <p>{box.box_title}</p>
+              <EditBoxModal box={box} />
+              <DeleteBoxModal userId={user.id} boxId={box.box_id} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

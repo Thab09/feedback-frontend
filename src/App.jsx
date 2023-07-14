@@ -9,6 +9,8 @@ import UserSettings from "./pages/UserSettings";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
 import PublicBoxes from "./pages/PublicBoxes";
+import Box from "./pages/Box";
+import Contact from "./pages/Contact";
 import Navbar from "./components/Navbar";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
@@ -20,18 +22,25 @@ function App() {
   return (
     <BrowserRouter>
       <ClerkProvider publishableKey={clerkPubKey}>
-        <Navbar />
-        <Routes>
-          <Route element={<AuthorizedUser />}>
-            <Route path="/yourboxes" element={<YourBoxes />} />
-            <Route path="/dashboard" element={<UserDashboard />} />
-            <Route path="/settings" element={<UserSettings />} />
-          </Route>
-          <Route path="/" element={<Home />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/public" element={<PublicBoxes />} />
-          {/* <Route path="/contact" element={<Home />} /> */}
-        </Routes>
+        <div className="mx-4 sm:mx-8 md:mx-10">
+          <div className="min-h-screen max-w-4xl py-8 font-inter lg:m-auto">
+            <Navbar />
+            <main className="">
+              <Routes>
+                <Route element={<AuthorizedUser />}>
+                  <Route path="/yourboxes" element={<YourBoxes />} />
+                  <Route path="/dashboard" element={<UserDashboard />} />
+                  <Route path="/settings" element={<UserSettings />} />
+                </Route>
+                <Route path="/" element={<Home />} />
+                <Route path="/features" element={<Features />} />
+                <Route path="/public" element={<PublicBoxes />} />
+                <Route path="/box/:boxid" element={<Box />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+            </main>
+          </div>
+        </div>
       </ClerkProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </BrowserRouter>
